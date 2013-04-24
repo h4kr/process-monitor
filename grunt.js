@@ -25,7 +25,8 @@ module.exports = function(grunt) {
         boss: true,
         eqnull: true,
         node: true,
-        laxcomma: true
+        laxcomma: true,
+        strict: false
       },
       globals: {
         exports: true
