@@ -1,29 +1,9 @@
 var procmon = require('../lib/process-monitor.js');
 
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
-
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
-
+//
+// Expose unit tests to nodeunit.
+//
 exports['process-monitor'] = {
-  setUp: function(done) {
-    done();
-  },
   'initialization': function(test) {
     test.expect(3);
 
@@ -47,15 +27,24 @@ exports['process-monitor'] = {
     test.done();
   },
   'stats event': function(test) {
-    var testMon = procmon.monitor({ pid: process.pid, interval: 10, format: '{cpu}% CPU - {mem} MEM' }).start();
+    var statsMon = procmon.monitor({ pid: process.pid, interval: 500, format: '{cpu}% CPU - {mem} MEM' }).start();
+    test.expect(4);
 
-    testMon.on('stats', function(stats) {
-      test.expect(4);
-
+    statsMon.once('stats', function(stats) {
       test.ok(stats, 'stats event should be called and provide stats object');
       test.ok(stats.cpu, 'stats object should have cpu property');
       test.ok(stats.mem, 'stats object should have mem property');
       test.ok(stats.out, 'should output formatted string results');
+
+      test.done();
+    });
+  },
+  'connections event': function(test) {
+    var conMon = procmon.monitor({ pid: process.pid, interval: 500 }).start();
+    test.expect(1);
+
+    conMon.once('connections', function(con) {
+      test.ok(con, 'connections event should be called and provide connections object');
 
       test.done();
     });

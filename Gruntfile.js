@@ -1,16 +1,7 @@
 module.exports = function(grunt) {
-
   grunt.initConfig({
-    pkg: '<json:package.json>',
-    test: {
+    nodeunit: {
       files: ['test/**/*.js']
-    },
-    lint: {
-      files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
-    },
-    watch: {
-      files: '<config:lint.files>',
-      tasks: 'default'
     },
     jshint: {
       options: {
@@ -26,15 +17,18 @@ module.exports = function(grunt) {
         eqnull: true,
         node: true,
         laxcomma: true,
-        strict: false
+        strict: false,
+        globals: {
+          exports: true
+        }
       },
-      globals: {
-        exports: true
-      }
+      files: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js']
     }
   });
 
-  grunt.registerTask('default', 'lint test');
-  grunt.registerTask('travis', 'lint test');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
+  grunt.registerTask('default', ['jshint', 'nodeunit']);
+  grunt.registerTask('travis', ['jshint', 'nodeunit']);
 };
