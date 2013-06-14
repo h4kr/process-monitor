@@ -30,9 +30,7 @@ Handle the `stats` response - an event will be emitted for each of the specified
 
 _Note: if a PID is not found, the resulting cpu and mem properties will be 0.0 and 0 respectively._
 
-## Documentation
-Generated code documentation is available [here](http://eventargs.com/docs/process-monitor/) and in the docs directory. This documentation is generated using
-`docco-husky` - to regenerate the documentation, run `$ docco-husky lib/*`.
+---
 
 Currently the `monitor` function accepts the following configuration options:
 
@@ -45,7 +43,7 @@ The `pid` option may be a single process ID or an array from process IDs to moni
 
 ### interval
 
-The rate in milliseconds at which the processes are checked and the stats event is emitted. The rate defaults to 1000 miliseconds.
+The rate in milliseconds at which the processes are checked and the stats event is emitted. The rate defaults to 1000 milliseconds.
 
     procmon.monitor({ pid: 1, interval: 5000 }).start();
 
@@ -75,7 +73,28 @@ There are two supported techniques for reading process information.
 * `ps` (default): Uses the `ps` command to find CPU and memory usage. CPU value returned from the `ps` command is a lifetime average and does not reflect the current usage.
 * `proc`: Uses information stored in the /proc files to calculate current CPU usage. Implementation comes from the [node-usage](https://npmjs.org/package/usage) module. Only supported on Linux.
 
+---
+
+Process-monitor uses the following events:
+
+### stats
+
+Called on the specified interval and passes an object containing the PID, CPU, and MEM values. If `format` was provided, the output will be provided in the `out` property.
+
+### connections
+
+Called on the specified interval and passes the number of concurrent connections as a String.
+
+### error
+
+Provides error information if any failures occur when collection stats.
+
+## Documentation
+Generated code documentation is available in the docs directory. This documentation is generated using `docco-husky` - to regenerate the documentation, run `$ docco-husky lib/*` (this may require that you install docco-husky globally).
+
 ## Release History
+* 2013/06/14 - v0.4.1 - Updated to use the latest version of Grunt; added a new `connections` event to monitor concurrent connections.
+* 2013/04/23 - v0.4.0 - Added `technique` to support `proc` or `ps` depending on the platform you are on.
 * 2013/04/23 - v0.3.0 - Added support for current CPU usage. Uses [node-usage](https://npmjs.org/package/usage) module.
 * 2012/09/28 - v0.2.0 - Added `format` to the configuration object which accepts a format for the output (the `out` property of the `stats` object). Uses [stringformat](https://npmjs.org/package/stringformat) which allows the use of `{cpu}`, `{mem}`, and `{pid}` in the format string.
 * 2012/09/24 - v0.1.1 - Documentation update for publishing to npm.

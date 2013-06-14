@@ -26,7 +26,7 @@
 </td><td class="code"><div class="highlight"><pre>  <span class="k">this</span><span class="p">.</span><span class="nx">isRunning</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Process IDs to monitor.</p></div><div class="details"><div class="dox_tag_title">Type</div><div class="dox_tag_detail"><span class="dox_type">array</span></div></div><div class="body"></div></div>
 </td><td class="code"><div class="highlight"><pre>  <span class="k">this</span><span class="p">.</span><span class="nx">pid</span> <span class="o">=</span> <span class="nx">config</span><span class="p">.</span><span class="nx">pid</span><span class="p">;</span></pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>The technique used to find CPU usage.</p></div><div class="details"><div class="dox_tag_title">Type</div><div class="dox_tag_detail"><span class="dox_type">string</span></div></div><div class="body"></div></div>
 </td><td class="code"><div class="highlight"><pre>  <span class="k">this</span><span class="p">.</span><span class="nx">technique</span> <span class="o">=</span> <span class="s1">&#39;ps&#39;</span><span class="p">;</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">technique</span> <span class="o">===</span> <span class="s1">&#39;proc&#39;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">technique</span> <span class="o">===</span> <span class="s1">&#39;proc&#39;</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">technique</span> <span class="o">=</span> <span class="s1">&#39;proc&#39;</span><span class="p">;</span>
   <span class="p">}</span></pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Process statistics detail.</p></div><div class="details"><div class="dox_tag_title">Type</div><div class="dox_tag_detail"><span class="dox_type">object</span></div></div><div class="body"></div></div>
 </td><td class="code"><div class="highlight"><pre>  <span class="k">this</span><span class="p">.</span><span class="nx">stats</span> <span class="o">=</span> <span class="p">{};</span>
@@ -35,9 +35,13 @@
 <span class="nx">ProcMon</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span></pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Handle the specified event then fire the callback.</p></div><div class="details"><div class="dox_tag_title">Params</div><div class="dox_tag_detail"><span>event </span><span class="dox_type">string</span><span>- The name of the event.</span></div><div class="dox_tag_detail"><span>callback </span><span class="dox_type">Function</span><span>- The function callback.</span></div></div><div class="body"></div></div>
 </td><td class="code"><div class="highlight"><pre>  <span class="nx">on</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
-  <span class="p">},</span></pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Start the process monitor loop.</p></div><div class="details"><div class="dox_tag_title">Returns</div><div class="dox_tag_detail"><span class="dox_type">ProcMon</span><span>Chainable instance of this ProcMon.</span></div></div><div class="body"></div></div>
+  <span class="p">},</span>
+  </pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Handle the specified event only once - exposed for testing.</p></div><div class="details"><div class="dox_tag_title">Params</div><div class="dox_tag_detail"><span>event </span><span class="dox_type">string</span><span>- The name of the event.</span></div><div class="dox_tag_detail"><span>callback </span><span class="dox_type">Function</span><span>- The function callback.</span></div></div><div class="body"></div></div>
+</td><td class="code"><div class="highlight"><pre>  <span class="nx">once</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">once</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+  <span class="p">},</span></pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Start the process monitor loop.</p></div><div class="details"><div class="dox_tag_title">Returns</div><div class="dox_tag_detail"><span class="dox_type">ProcMon</span><span>Chainable instance of this ProcMon.</span></div></div><div class="body"></div></div>
 </td><td class="code"><div class="highlight"><pre>  <span class="nx">start</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>Already running.</p>
+    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><p>Already running.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">isRunning</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
     <span class="p">}</span>
@@ -46,29 +50,30 @@
 
     <span class="k">this</span><span class="p">.</span><span class="nx">intervalId</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
       <span class="nx">self</span><span class="p">.</span><span class="nx">updateStats</span><span class="p">();</span>
+      <span class="nx">self</span><span class="p">.</span><span class="nx">updateConnections</span><span class="p">();</span>
     <span class="p">},</span> <span class="nx">self</span><span class="p">.</span><span class="nx">interval</span><span class="p">);</span>
 
     <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-  <span class="p">},</span></pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Stop the process monitor loop.</p></div><div class="details"><div class="dox_tag_title">Returns</div><div class="dox_tag_detail"><span class="dox_type">ProcMon</span><span>Chainable instance of this ProcMon.</span></div></div><div class="body"></div></div>
+  <span class="p">},</span></pre></div></td></tr><tr id="section-19"><td class="docs"><div class="pilwrap"><a href="#section-19" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Stop the process monitor loop.</p></div><div class="details"><div class="dox_tag_title">Returns</div><div class="dox_tag_detail"><span class="dox_type">ProcMon</span><span>Chainable instance of this ProcMon.</span></div></div><div class="body"></div></div>
 </td><td class="code"><div class="highlight"><pre>  <span class="nx">stop</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">clearInterval</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">intervalId</span><span class="p">);</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">isRunning</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 
     <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-  <span class="p">},</span></pre></div></td></tr><tr id="section-19"><td class="docs"><div class="pilwrap"><a href="#section-19" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Updates stat information.</p></div><div class="body"></div></div>
+  <span class="p">},</span></pre></div></td></tr><tr id="section-20"><td class="docs"><div class="pilwrap"><a href="#section-20" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Updates stat information.</p></div><div class="body"></div></div>
 </td><td class="code"><div class="highlight"><pre>  <span class="nx">updateStats</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
     <span class="k">this</span><span class="p">.</span><span class="nx">pid</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">pid</span><span class="p">)</span> <span class="p">{</span>
 
-      <span class="k">if</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">technique</span> <span class="o">===</span> <span class="s1">&#39;ps&#39;</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">technique</span> <span class="o">===</span> <span class="s1">&#39;ps&#39;</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">self</span><span class="p">.</span><span class="nx">updateStatsPS</span><span class="p">(</span><span class="nx">pid</span><span class="p">);</span>
       <span class="p">}</span>
       <span class="k">else</span> <span class="p">{</span>
         <span class="nx">self</span><span class="p">.</span><span class="nx">updateStatsProc</span><span class="p">(</span><span class="nx">pid</span><span class="p">);</span>
       <span class="p">}</span>
     <span class="p">});</span>
-  <span class="p">},</span></pre></div></td></tr><tr id="section-20"><td class="docs"><div class="pilwrap"><a href="#section-20" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Updates stat information using the ps command.</p></div><div class="body"></div></div>
+  <span class="p">},</span></pre></div></td></tr><tr id="section-21"><td class="docs"><div class="pilwrap"><a href="#section-21" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Updates stat information using the ps command.</p></div><div class="body"></div></div>
 </td><td class="code"><div class="highlight"><pre>  <span class="nx">updateStatsPS</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">pid</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
@@ -76,7 +81,7 @@
     <span class="kd">var</span> <span class="nx">command</span> <span class="o">=</span> <span class="s1">&#39;ps -p &#39;</span> <span class="o">+</span> <span class="nx">pid</span> <span class="o">+</span> <span class="s1">&#39; -o %cpu,rss&#39;</span><span class="p">;</span>
 
     <span class="nx">exec</span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">stdout</span><span class="p">,</span> <span class="nx">stderr</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">self</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
       <span class="p">}</span>
       <span class="k">else</span> <span class="p">{</span>
@@ -85,13 +90,13 @@
         <span class="nx">self</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;stats&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">stats</span><span class="p">);</span>
       <span class="p">}</span>
     <span class="p">});</span>
-  <span class="p">},</span></pre></div></td></tr><tr id="section-21"><td class="docs"><div class="pilwrap"><a href="#section-21" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Updates stat information using /proc file data.</p></div><div class="body"></div></div>
+  <span class="p">},</span></pre></div></td></tr><tr id="section-22"><td class="docs"><div class="pilwrap"><a href="#section-22" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Updates stat information using /proc file data.</p></div><div class="body"></div></div>
 </td><td class="code"><div class="highlight"><pre>  <span class="nx">updateStatsProc</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">pid</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
     <span class="nx">usage</span><span class="p">.</span><span class="nx">lookup</span><span class="p">(</span><span class="nx">pid</span><span class="p">,</span> <span class="p">{</span> <span class="nx">keepHistory</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">self</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
       <span class="p">}</span>
       <span class="k">else</span> <span class="p">{</span>
@@ -100,9 +105,23 @@
         <span class="nx">self</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;stats&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">stats</span><span class="p">);</span>
       <span class="p">}</span>
     <span class="p">});</span>
+  <span class="p">},</span>
+  </pre></div></td></tr><tr id="section-23"><td class="docs"><div class="pilwrap"><a href="#section-23" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Update connection information.</p></div><div class="body"></div></div>
+</td><td class="code"><div class="highlight"><pre>  
+  <span class="nx">updateConnections</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+    <span class="nx">exec</span><span class="p">(</span><span class="s1">&#39;netstat -an | grep -c EST&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">stdout</span><span class="p">,</span> <span class="nx">stderr</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">connections</span> <span class="o">=</span> <span class="nx">stdout</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;\n&#39;</span><span class="p">);</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;connections&#39;</span><span class="p">,</span> <span class="nx">connections</span><span class="p">.</span><span class="nx">length</span> <span class="o">?</span> <span class="nx">connections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
   <span class="p">}</span>
-<span class="p">};</span></pre></div></td></tr><tr id="section-22"><td class="docs"><div class="pilwrap"><a href="#section-22" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><h2>process-monitor API</h2></div><div class="body"></div></div>
-</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-23"><td class="docs"><div class="pilwrap"><a href="#section-23" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Process-monitor API definition.</p></div><div class="details"><div class="dox_tag_title">Params</div><div class="dox_tag_detail"><span>config </span><span class="dox_type">object</span><span>- Configuration options.</span></div><div class="dox_tag_title">Returns</div><div class="dox_tag_detail"><span class="dox_type">ProcMon</span><span>Chainable instance of ProcMon.</span></div></div><div class="body"></div></div>
+<span class="p">};</span></pre></div></td></tr><tr id="section-24"><td class="docs"><div class="pilwrap"><a href="#section-24" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><h2>process-monitor API</h2></div><div class="body"></div></div>
+</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-25"><td class="docs"><div class="pilwrap"><a href="#section-25" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Process-monitor API definition.</p></div><div class="details"><div class="dox_tag_title">Params</div><div class="dox_tag_detail"><span>config </span><span class="dox_type">object</span><span>- Configuration options.</span></div><div class="dox_tag_title">Returns</div><div class="dox_tag_detail"><span class="dox_type">ProcMon</span><span>Chainable instance of ProcMon.</span></div></div><div class="body"></div></div>
 </td><td class="code"><div class="highlight"><pre><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">monitor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">config</span><span class="p">.</span><span class="nx">pid</span> <span class="o">===</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">throw</span> <span class="k">new</span> <span class="nx">TypeError</span><span class="p">(</span><span class="s1">&#39;You must specify at least one PID&#39;</span><span class="p">);</span>

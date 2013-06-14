@@ -1,10 +1,10 @@
 <!DOCTYPE html><html><head><title>README</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="./docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="./index.html" class="source"><span class="file_name">README</span></a><a href="./lib/process-monitor.js.html" class="source "><span class="base_path">lib / </span><span class="file_name">process-monitor.js</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"></th><th class="code"></th></tr></thead><tbody><tr id="section"><td class="docs"><h1><a href="https://github.com/onmodulus/process-monitor">process-monitor
-</a></h1><p>Monitors the CPU and memory usage for a PID or collection of PIDs.</p><h3>Version</h3><p>0.3.0</p><h3>Author</h3><p><span class="gravatar"><img src="http://www.gravatar.com/avatar/e382905ab2b34219ea5ec5ca6e18fe79"/><span>Modulus &lt;support@modulus.io&gt;</span></span></p><h3>Contributors</h3><p><span class="gravatar"><img src="http://www.gravatar.com/avatar/aab639e3bbc03775ccd128a473813a96"/><span>Brandon Cannaday&lt;brandon@modulus.io&gt;</span></span></p><p><span class="gravatar"><img src="http://www.gravatar.com/avatar/1a1ecb880527b1fccad00224317c5cc6"/><span>Matt Hernandez&lt;matt@eventargs.com&gt;</span></span></p><h3>Repository</h3><p>git - git://github.com/onmodulus/process-monitor.git</p><h3>Dependencies </h3><ul><li><b>string </b><span>0.2.x</span></li><li><b>stringformat </b><span>0.0.5</span></li><li><b>usage </b><span>0.3.x</span></li></ul><p><h3>Stats</h3><pre class="code_stats">
-http://cloc.sourceforge.net v 1.55  T=0.5 s (2.0 files/s, 484.0 lines/s)
+</a></h1><p>Monitors the CPU and memory usage for a PID or collection of PIDs.</p><h3>Version</h3><p>0.4.1</p><h3>Author</h3><p><span class="gravatar"><img src="http://www.gravatar.com/avatar/e382905ab2b34219ea5ec5ca6e18fe79"/><span>Modulus &lt;support@modulus.io&gt;</span></span></p><h3>Contributors</h3><p><span class="gravatar"><img src="http://www.gravatar.com/avatar/aab639e3bbc03775ccd128a473813a96"/><span>Brandon Cannaday&lt;brandon@modulus.io&gt;</span></span></p><p><span class="gravatar"><img src="http://www.gravatar.com/avatar/1a1ecb880527b1fccad00224317c5cc6"/><span>Matt Hernandez&lt;matt@eventargs.com&gt;</span></span></p><h3>Repository</h3><p>git - git://github.com/onmodulus/process-monitor.git</p><h3>Dependencies </h3><ul><li><b>string </b><span>0.2.x</span></li><li><b>stringformat </b><span>0.0.5</span></li><li><b>usage </b><span>0.3.x</span></li></ul><p><h3>Stats</h3><pre class="code_stats">
+http://cloc.sourceforge.net v 1.55  T=0.5 s (2.0 files/s, 538.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Javascript                       1             54             90             98
+Javascript                       1             58             98            113
 -------------------------------------------------------------------------------
 </pre></p></td><td id="content" class="code"><h1>process-monitor</h1>
 
@@ -42,10 +42,7 @@ var multi = procmon.monitor({ pid: [1, 2, 3] }).start();
 
 <p><em>Note: if a PID is not found, the resulting cpu and mem properties will be 0.0 and 0 respectively.</em></p>
 
-<h2>Documentation</h2>
-
-<p>Generated code documentation is available <a href="http://eventargs.com/docs/process-monitor/">here</a> and in the docs directory. This documentation is generated using
-<code>docco-husky</code> - to regenerate the documentation, run <code>$ docco-husky lib/*</code>.</p>
+<hr />
 
 <p>Currently the <code>monitor</code> function accepts the following configuration options:</p>
 
@@ -59,7 +56,7 @@ procmon.monitor({ pid: [1, 2, 3] }).start();
 
 <h3>interval</h3>
 
-<p>The rate in milliseconds at which the processes are checked and the stats event is emitted. The rate defaults to 1000 miliseconds.</p>
+<p>The rate in milliseconds at which the processes are checked and the stats event is emitted. The rate defaults to 1000 milliseconds.</p>
 
 <pre><code>procmon.monitor({ pid: 1, interval: 5000 }).start();
 </code></pre>
@@ -95,9 +92,31 @@ procmon.on('stats', function(stats) {
 <li><code>proc</code>: Uses information stored in the /proc files to calculate current CPU usage. Implementation comes from the <a href="https://npmjs.org/package/usage">node-usage</a> module. Only supported on Linux.</li>
 </ul>
 
+<hr />
+
+<p>Process-monitor uses the following events:</p>
+
+<h3>stats</h3>
+
+<p>Called on the specified interval and passes an object containing the PID, CPU, and MEM values. If <code>format</code> was provided, the output will be provided in the <code>out</code> property.</p>
+
+<h3>connections</h3>
+
+<p>Called on the specified interval and passes the number of concurrent connections as a String.</p>
+
+<h3>error</h3>
+
+<p>Provides error information if any failures occur when collection stats.</p>
+
+<h2>Documentation</h2>
+
+<p>Generated code documentation is available in the docs directory. This documentation is generated using <code>docco-husky</code> - to regenerate the documentation, run <code>$ docco-husky lib/*</code> (this may require that you install docco-husky globally).</p>
+
 <h2>Release History</h2>
 
 <ul>
+<li>2013/06/14 - v0.4.1 - Updated to use the latest version of Grunt; added a new <code>connections</code> event to monitor concurrent connections.</li>
+<li>2013/04/23 - v0.4.0 - Added <code>technique</code> to support <code>proc</code> or <code>ps</code> depending on the platform you are on.</li>
 <li>2013/04/23 - v0.3.0 - Added support for current CPU usage. Uses <a href="https://npmjs.org/package/usage">node-usage</a> module.</li>
 <li>2012/09/28 - v0.2.0 - Added <code>format</code> to the configuration object which accepts a format for the output (the <code>out</code> property of the <code>stats</code> object). Uses <a href="https://npmjs.org/package/stringformat">stringformat</a> which allows the use of <code>{cpu}</code>, <code>{mem}</code>, and <code>{pid}</code> in the format string.</li>
 <li>2012/09/24 - v0.1.1 - Documentation update for publishing to npm.</li>
